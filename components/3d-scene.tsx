@@ -102,7 +102,7 @@ function MorphingGeometry() {
       {renderShape()}
       <Html transform occlude position={[0, 0, 2]}>
         <div className="text-white text-sm font-mono bg-black/70 px-3 py-2 rounded-lg backdrop-blur-md border border-primary/30">
-          {`<${shapes[currentShape]} />`}
+          {/* {`<${shapes[currentShape]} />`} */}
         </div>
       </Html>
     </Float>

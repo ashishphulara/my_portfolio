@@ -17,6 +17,7 @@ import { useProjects } from "@/hooks/use-projects";
 import { ProjectCard } from "@/components/project-card";
 import { ContactForm } from "@/components/contact-form";
 import { ThreeDScene } from "@/components/3d-scene";
+import { useRouter } from "next/navigation";
 
 function useParallax() {
   const [scrollY, setScrollY] = useState(0);
@@ -61,6 +62,7 @@ export default function Home() {
   const [aboutRef, aboutInView] = useInView(0.3);
   const [skillsRef, skillsInView] = useInView(0.3);
   const [projectsRef, projectsInView] = useInView(0.2);
+  const router = useRouter();
 
   const {
     projects: featuredProjects,
@@ -174,7 +176,7 @@ export default function Home() {
               <span className="gradient-text animate-gradient-shift">
                 Full Stack
               </span>
-              <span className="block text-primary animate-pulse-glow">
+              <span className="inline-block text-center text-primary animate-pulse-glow px-10 py-2 border border-primary/40 rounded-full min-w-[200px]">
                 Developer
               </span>
             </h1>
@@ -486,36 +488,49 @@ export default function Home() {
 
           {/* Projects list */}
           {!projectsLoading && !projectsError && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {featuredProjects.length > 0 ? (
-                featuredProjects?.map((project, index) => (
-                  <div
-                    key={project._id}
-                    className={`transition-all duration-1000 ${
-                      projectsInView
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-20"
-                    }`}
-                    style={{ transitionDelay: `${index * 150}ms` }}
-                  >
-                    <ProjectCard
-                      project={project}
-                      index={index}
-                      scrollY={scrollY}
-                    />
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                {featuredProjects.length > 0 ? (
+                  featuredProjects?.slice(0, 3).map((project, index) => (
+                    <div
+                      key={project._id}
+                      className={`transition-all duration-1000 ${
+                        projectsInView
+                          ? "opacity-100 translate-y-0"
+                          : "opacity-0 translate-y-20"
+                      }`}
+                      style={{ transitionDelay: `${index * 150}ms` }}
+                    >
+                      <ProjectCard
+                        project={project}
+                        index={index}
+                        scrollY={scrollY}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-16">
+                    <p className="text-muted-foreground text-xl">
+                      No featured projects available yet.
+                    </p>
                   </div>
-                ))
-              ) : (
-                <div className="col-span-full text-center py-16">
-                  <p className="text-muted-foreground text-xl">
-                    No featured projects available yet.
-                  </p>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            </>
           )}
         </div>
       </section>
+      {/* ✅ View More Button */}
+      <div className="text-center mt-12 mb-12">
+        <Button
+          size="lg"
+          className="bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 animate-pulse-glow px-8 py-4"
+          onClick={() => router.push("/projects")}
+        >
+          <Sparkles className="w-5 h-5 mr-2" />
+          View More Projects
+        </Button>
+      </div>
 
       {/* ✅ CONTACT SECTION ---------------------------- */}
       <section id="contact" className="py-32 px-6 relative overflow-hidden">

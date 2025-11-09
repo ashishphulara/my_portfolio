@@ -54,6 +54,7 @@
     "expo-gl": "latest",
     "express": "latest",
     "express-rate-limit": "latest",
+    "framer-motion": "^12.23.24",
     "geist": "latest",
     "input-otp": "1.4.1",
     "jsonwebtoken": "latest",
